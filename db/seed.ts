@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import sampleData from './sample-data';
 
+// Run npx prisma studio to see database tables on http://localhost:5555
+
 async function main() {
   const prisma = new PrismaClient();
   await prisma.product.deleteMany();
