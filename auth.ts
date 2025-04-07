@@ -22,7 +22,13 @@ export const config = {
         password: { type: 'password' }
       },
       async authorize(credentials) {
-        if (!credentials) return null;
+        if (
+          !credentials ||
+          typeof credentials.email !== 'string' ||
+          typeof credentials.password !== 'string'
+        ) {
+          return null;
+        }
 
         const user = await prisma.user.findFirst({
           where: { email: credentials.email }
@@ -57,6 +63,7 @@ export const config = {
 
       return session;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     jwt: async ({ token, user, trigger, session }: any) => {
       if (user) {
         token.role = user.role;
